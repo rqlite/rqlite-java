@@ -1,6 +1,6 @@
 package com.rqlite;
 
-public interface rqlite {
+public interface Rqlite {
 
     /**
      * ReadConsistencyLevel specifies the consistency level of a query.
@@ -27,7 +27,7 @@ public interface rqlite {
     }
 
     /** Query executes a statement that returns rows. */
-    public void Query(String q);
+    public void Query(String q, boolean tx, ReadConsistencyLevel lvl);
 
     /** Execute executes a statement that does not return rows. */
     public void Execute(String q);
