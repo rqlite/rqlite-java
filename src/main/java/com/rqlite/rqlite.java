@@ -2,8 +2,18 @@ package com.rqlite;
 
 public interface rqlite {
 
+    /**
+     * ReadConsistencyLevel specifies the consistency level of a query.
+     */
     public enum ReadConsistencyLevel {
-        NONE("none"), WEAK("weak"), STRONG("strong");
+        /** Node queries local SQLite database. */
+        NONE("none"),
+
+        /** Node performs leader check using master state before querying. */
+        WEAK("weak"),
+
+        /** Node performs leader check through the Raft system before querying */
+        STRONG("strong");
 
         private final String value;
 
@@ -16,7 +26,9 @@ public interface rqlite {
         }
     }
 
+    /** Query executes a statement that returns rows. */
     public void Query(String q);
 
+    /** Execute executes a statement that does not return rows. */
     public void Execute(String q);
 }
