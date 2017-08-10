@@ -5,4 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>rqlite Java client</name>
   <description>A Java client for rqlite, the lightweight, distributed relational database built on SQLite</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.google.http-client</groupId>
+  		<artifactId>google-http-client</artifactId>
+  		<version>1.22.0</version>
+  	</dependency>
+  </dependencies>
 </project>
