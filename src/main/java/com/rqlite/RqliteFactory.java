@@ -12,7 +12,7 @@ public enum RqliteFactory {
      *            the URL to connect to.
      * @return a rqlite client instance.
      */
-    public static Rqlite connect(final String url) {
-        return new RqliteImpl();
+    public static Rqlite connect(final String host, final Integer port) {
+        return new RqliteImpl(host, port);
     }
 }

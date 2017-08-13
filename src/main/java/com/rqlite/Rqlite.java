@@ -27,8 +27,8 @@ public interface Rqlite {
     }
 
     /** Query executes a statement that returns rows. */
-    public void Query(String q, boolean tx, ReadConsistencyLevel lvl);
+    public QueryResults Query(String q, boolean tx, ReadConsistencyLevel lvl);
 
     /** Execute executes a statement that does not return rows. */
-    public void Execute(String q);
+    public ExecuteResponse Execute(String q);
 }
