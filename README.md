@@ -1,2 +1,2 @@
 # rqlite-java
-Java client for rqlite
+Java client for rqlite, currently in development.
