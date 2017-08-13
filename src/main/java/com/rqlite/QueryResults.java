@@ -20,6 +20,6 @@ public class QueryResults extends GenericJson {
         public float time;
     }
 
-    @Key("results")
+    @Key
     public List<Result> results;
 }
