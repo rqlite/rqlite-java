@@ -8,11 +8,15 @@ public enum RqliteFactory {
     /**
      * Create a connection to a rqlite node.
      *
-     * @param url
-     *            the URL to connect to.
+     * @param proto
+     *            the protocol, either "http" or "https"
+     * @param host
+     *            the host name of the rqlite note
+     * @param port
+     *            the port on the rqlite node
      * @return a rqlite client instance.
      */
-    public static Rqlite connect(final String host, final Integer port) {
-        return new RqliteImpl(host, port);
+    public static Rqlite connect(final String proto, final String host, final Integer port) {
+        return new RqliteImpl(proto, host, port);
     }
 }

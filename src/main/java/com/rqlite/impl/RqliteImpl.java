@@ -24,8 +24,8 @@ public class RqliteImpl implements Rqlite {
     private final HttpRequestFactory requestFactory;
     private final UrlBuilder urlBuilder;
 
-    public RqliteImpl(final String host, final Integer port) {
-        this.urlBuilder = new UrlBuilder("http", host, port);
+    public RqliteImpl(final String proto, final String host, final Integer port) {
+        this.urlBuilder = new UrlBuilder(proto, host, port);
 
         this.requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
             public void initialize(HttpRequest request) {
