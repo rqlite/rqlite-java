@@ -31,4 +31,7 @@ public interface Rqlite {
 
     /** Execute executes a statement that does not return rows. */
     public ExecuteResponse Execute(String q);
+
+    // Ping checks communication with the rqlite node. */
+    public Pong Ping();
 }
