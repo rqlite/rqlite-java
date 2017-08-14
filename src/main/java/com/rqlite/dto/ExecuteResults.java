@@ -7,6 +7,9 @@ import com.google.api.client.util.Key;
 
 public class ExecuteResults extends GenericJson {
     public class Result {
+        @Key
+        public String error;
+
         @Key("last_insert_id")
         public Integer lastInsertId;
 

@@ -15,7 +15,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.rqlite.Rqlite;
-import com.rqlite.dto.ExecuteRequest;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
@@ -59,12 +58,22 @@ public class RqliteImpl implements Rqlite {
 
     public ExecuteResults Execute(String s) {
         Url url = this.urlBuilder.execute(s);
+        HttpRequest request = null;
+        HttpResponse response = null;
+        ExecuteResults results = null;
 
-        ExecuteRequest request = new ExecuteRequest();
-        request.statements = new String[1];
-        request.statements[0] = s;
-        return null;
+        String[] stmts = { s };
+        try {
+            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(this.JSON_FACTORY, stmts));
+            response = request.execute();
+            //System.out.println(response.parseAsString());
+            results = response.parseAs(ExecuteResults.class);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        return results;
     }
 
     public Pong Ping() {
