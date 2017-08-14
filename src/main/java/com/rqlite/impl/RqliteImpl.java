@@ -3,6 +3,7 @@ package com.rqlite.impl;
 import java.io.IOException;
 
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -73,10 +74,11 @@ public class RqliteImpl implements Rqlite {
             return null;
         }
 
-        Object version = response.getHeaders().get("X-Rqlite-Version");
+        HttpHeaders headers = response.getHeaders();
+        String version = headers.getFirstHeaderStringValue("X-Rqlite-Version");
         // TODO If version is null, raise.
 
-        return new Pong(version.toString());
+        return new Pong(version);
     }
 
     private class Url extends GenericUrl {
@@ -133,7 +135,7 @@ public class RqliteImpl implements Rqlite {
         }
 
         public GenericUrl status() {
-            String u = String.format("%s://%s:d/status", this.proto, this.host, this.port);
+            String u = String.format("%s://%s:%d/status", this.proto, this.host, this.port);
             return new GenericUrl(u);
         }
 

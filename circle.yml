@@ -4,5 +4,8 @@ machine:
 
 dependencies:
     pre:
-        - docker pull rqlite/rqlite
+        - docker pull rqlite/rqlite:4.0.2
         - docker run -d -p 4001:4001 rqlite/rqlite; sleep 5
+    override:
+        environment:
+            RQLITE_VERSION: 4.0.2

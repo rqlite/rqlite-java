@@ -1,5 +1,7 @@
 package com.rqlite;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +17,15 @@ public class RqliteFactoryTest {
     public void testCreateRqliteInstancePing() {
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         Pong pong = rqlite.Ping();
-        Assert.assertEquals(pong.version, "4.0.2");
+        Assert.assertEquals(getRqliteVersion(), pong.version);
+    }
+
+    private String getRqliteVersion() {
+        Map<String, String> getenv = System.getenv();
+        if (getenv.containsKey("RQLITE_VERSION")) {
+            return getenv.get("RQLITE_VERSION");
+        }
+        return "unknown";
     }
 
 }
