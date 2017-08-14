@@ -8,4 +8,4 @@ dependencies:
         - docker run -d -p 4001:4001 rqlite/rqlite; sleep 5
     override:
         environment:
-            RQLITE_VERSION: 4.0.2
+            RQLITE_VERSION: v4.0.2
