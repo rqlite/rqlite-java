@@ -5,4 +5,4 @@ machine:
 dependencies:
     pre:
         - docker pull rqlite/rqlite
-        - docker run -p 4001:4001 -p4002:4002 rqlite/rqlite
+        - docker run -p4002:4002 rqlite/rqlite
