@@ -10,9 +10,11 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.rqlite.ExecuteRequest;
 import com.rqlite.ExecuteResults;
 import com.rqlite.Pong;
 import com.rqlite.QueryResults;
@@ -57,6 +59,10 @@ public class RqliteImpl implements Rqlite {
 
     public ExecuteResults Execute(String s) {
         Url url = this.urlBuilder.execute(s);
+
+        ExecuteRequest request = new ExecuteRequest();
+        request.statements = new String[1];
+        request.statements[0] = s;
         return null;
 
     }
@@ -138,6 +144,10 @@ public class RqliteImpl implements Rqlite {
             String u = String.format("%s://%s:%d/status", this.proto, this.host, this.port);
             return new GenericUrl(u);
         }
-
     }
+
+    static void setContent(HttpRequest request, Object data) {
+        request.setContent(new JsonHttpContent(new JacksonFactory(), data));
+    }
+
 }
