@@ -11,4 +11,11 @@ public class RqliteFactoryTest {
         Assert.assertNotNull(rqlite);
     }
 
+    @Test
+    public void testCreateRqliteInstancePing() {
+        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
+        Pong pong = rqlite.Ping();
+        Assert.assertEquals(pong.version, "4.0.2");
+    }
+
 }
