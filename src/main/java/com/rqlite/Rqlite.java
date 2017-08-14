@@ -1,5 +1,9 @@
 package com.rqlite;
 
+import com.rqlite.dto.ExecuteResults;
+import com.rqlite.dto.Pong;
+import com.rqlite.dto.QueryResults;
+
 public interface Rqlite {
 
     /**

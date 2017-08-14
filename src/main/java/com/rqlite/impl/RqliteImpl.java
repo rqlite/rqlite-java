@@ -14,11 +14,11 @@ import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.rqlite.ExecuteRequest;
-import com.rqlite.ExecuteResults;
-import com.rqlite.Pong;
-import com.rqlite.QueryResults;
 import com.rqlite.Rqlite;
+import com.rqlite.dto.ExecuteRequest;
+import com.rqlite.dto.ExecuteResults;
+import com.rqlite.dto.Pong;
+import com.rqlite.dto.QueryResults;
 
 public class RqliteImpl implements Rqlite {
 
