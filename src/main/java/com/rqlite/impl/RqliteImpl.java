@@ -64,9 +64,9 @@ public class RqliteImpl implements Rqlite {
 
         String[] stmts = { s };
         try {
-            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(this.JSON_FACTORY, stmts));
+            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
+            request.setParser(new JsonObjectParser(JSON_FACTORY));
             response = request.execute();
-            //System.out.println(response.parseAsString());
             results = response.parseAs(ExecuteResults.class);
         } catch (IOException e) {
             // TODO Auto-generated catch block

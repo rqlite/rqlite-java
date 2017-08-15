@@ -9,8 +9,14 @@ public class RqliteClientTest {
     @Test
     public void testRqliteClientCreateTable() {
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
+        ExecuteResults results = null;
 
-        ExecuteResults results = rqlite.Execute("CREATE TABLE foo (id integer not null primary key, name text)");
+        results = rqlite.Execute("CREATE TABLE foo (id integer not null primary key, name text)");
         Assert.assertNotNull(results);
+        System.out.println(results.toString());
+
+        results = rqlite.Execute("INSERT INTO foo(name) VALUES(\"fiona\")");
+        Assert.assertNotNull(results);
+        System.out.println(results.toString());
     }
 }
