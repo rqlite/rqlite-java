@@ -6,7 +6,7 @@ import com.google.api.client.json.GenericJson;
 import com.google.api.client.util.Key;
 
 public class QueryResults extends GenericJson {
-    public class Result {
+    public static class Result extends GenericJson {
         @Key
         public List<String> columns;
 

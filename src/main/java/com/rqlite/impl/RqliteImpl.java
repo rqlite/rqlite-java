@@ -141,7 +141,7 @@ public class RqliteImpl implements Rqlite {
 
         public QueryUrl query(String query) {
             String u = String.format("%s://%s:%d/db/query", this.proto, this.host, this.port);
-            return new QueryUrl(u);
+            return (QueryUrl) new QueryUrl(u).set("q", query);
         }
 
         public ExecuteUrl execute(String statement) {
