@@ -8,7 +8,7 @@ public class QueryUrl extends Url {
     }
 
     public QueryUrl setReadConsistencyLevel(ReadConsistencyLevel lvl) {
-        this.put("level", lvl.toString());
+        this.put("level", lvl.toString().toLowerCase());
         return this;
     }
 }
