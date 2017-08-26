@@ -1,4 +1,4 @@
-package com.rqlite.url;
+package com.rqlite.impl.url;
 
 public class ExecuteUrl extends Url {
     public ExecuteUrl(String encodedUrl) {

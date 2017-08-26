@@ -18,7 +18,7 @@ import com.rqlite.Rqlite;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
-import com.rqlite.url.UrlBuilder;
+import com.rqlite.impl.url.UrlBuilder;
 
 public class RqliteImpl implements Rqlite {
 

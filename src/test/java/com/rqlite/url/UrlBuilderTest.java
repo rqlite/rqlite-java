@@ -3,6 +3,10 @@ package com.rqlite.url;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.rqlite.impl.url.ExecuteUrl;
+import com.rqlite.impl.url.QueryUrl;
+import com.rqlite.impl.url.UrlBuilder;
+
 public class UrlBuilderTest {
     @Test
     public void testUrlBuilderQuery() {
