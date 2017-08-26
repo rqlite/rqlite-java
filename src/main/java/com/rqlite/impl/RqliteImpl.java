@@ -2,6 +2,7 @@ package com.rqlite.impl;
 
 import java.io.IOException;
 
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -17,7 +18,6 @@ import com.rqlite.Rqlite;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
-import com.rqlite.url.Url;
 import com.rqlite.url.UrlBuilder;
 
 public class RqliteImpl implements Rqlite {
@@ -39,7 +39,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public QueryResults Query(String q, boolean tx, ReadConsistencyLevel lvl) {
-        Url url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl).enableTransaction(tx);
+        GenericUrl url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl).enableTransaction(tx);
         HttpRequest request = null;
         HttpResponse response = null;
         QueryResults results = null;
@@ -58,7 +58,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public ExecuteResults Execute(String s) {
-        Url url = this.urlBuilder.Execute(s);
+        GenericUrl url = this.urlBuilder.Execute(s);
         HttpRequest request = null;
         HttpResponse response = null;
         ExecuteResults results = null;
