@@ -2,7 +2,6 @@ package com.rqlite.impl;
 
 import java.io.IOException;
 
-import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -18,6 +17,8 @@ import com.rqlite.Rqlite;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
+import com.rqlite.url.Url;
+import com.rqlite.url.UrlBuilder;
 
 public class RqliteImpl implements Rqlite {
 
@@ -38,7 +39,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public QueryResults Query(String q, boolean tx, ReadConsistencyLevel lvl) {
-        Url url = this.urlBuilder.query(q).setReadConsistencyLevel(lvl).enableTransaction(tx);
+        Url url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl).enableTransaction(tx);
         HttpRequest request = null;
         HttpResponse response = null;
         QueryResults results = null;
@@ -57,7 +58,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public ExecuteResults Execute(String s) {
-        Url url = this.urlBuilder.execute(s);
+        Url url = this.urlBuilder.Execute(s);
         HttpRequest request = null;
         HttpResponse response = null;
         ExecuteResults results = null;
@@ -81,7 +82,7 @@ public class RqliteImpl implements Rqlite {
         HttpResponse response = null;
 
         try {
-            request = this.requestFactory.buildGetRequest(this.urlBuilder.status());
+            request = this.requestFactory.buildGetRequest(this.urlBuilder.Status());
             response = request.execute();
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -95,68 +96,4 @@ public class RqliteImpl implements Rqlite {
 
         return new Pong(version);
     }
-
-    private class Url extends GenericUrl {
-        public Url(String encodedUrl) {
-            super(encodedUrl);
-        }
-
-        public Url enableTransaction(Boolean tx) {
-            if (tx) {
-                this.put("transaction", tx.toString());
-            } else {
-                this.remove("transaction");
-            }
-            return this;
-        }
-    }
-
-    private class QueryUrl extends Url {
-        public QueryUrl(String encodedUrl) {
-            super(encodedUrl);
-        }
-
-        public QueryUrl setReadConsistencyLevel(ReadConsistencyLevel lvl) {
-            this.put("level", lvl.toString());
-            return this;
-        }
-    }
-
-    private class ExecuteUrl extends Url {
-        public ExecuteUrl(String encodedUrl) {
-            super(encodedUrl);
-        }
-    }
-
-    private class UrlBuilder {
-        private String proto;
-        private String host;
-        private Integer port;
-
-        public UrlBuilder(final String proto, final String host, final Integer port) {
-            this.proto = proto;
-            this.host = host;
-            this.port = port;
-        }
-
-        public QueryUrl query(String query) {
-            String u = String.format("%s://%s:%d/db/query", this.proto, this.host, this.port);
-            return (QueryUrl) new QueryUrl(u).set("q", query);
-        }
-
-        public ExecuteUrl execute(String statement) {
-            String u = String.format("%s://%s:%d/db/execute", this.proto, this.host, this.port);
-            return new ExecuteUrl(u);
-        }
-
-        public GenericUrl status() {
-            String u = String.format("%s://%s:%d/status", this.proto, this.host, this.port);
-            return new GenericUrl(u);
-        }
-    }
-
-    static void setContent(HttpRequest request, Object data) {
-        request.setContent(new JsonHttpContent(new JacksonFactory(), data));
-    }
-
 }
