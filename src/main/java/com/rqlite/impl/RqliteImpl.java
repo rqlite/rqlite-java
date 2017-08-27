@@ -38,8 +38,8 @@ public class RqliteImpl implements Rqlite {
         });
     }
 
-    public QueryResults Query(String q, boolean tx, ReadConsistencyLevel lvl) {
-        GenericUrl url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl).enableTransaction(tx);
+    public QueryResults Query(String q, ReadConsistencyLevel lvl) {
+        GenericUrl url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl);
         HttpRequest request = null;
         HttpResponse response = null;
         QueryResults results = null;
@@ -55,6 +55,11 @@ public class RqliteImpl implements Rqlite {
         }
 
         return results;
+    }
+
+    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public ExecuteResults Execute(String s) {

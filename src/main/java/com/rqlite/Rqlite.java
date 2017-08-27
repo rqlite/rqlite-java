@@ -30,10 +30,13 @@ public interface Rqlite {
         }
     }
 
-    /** Query executes a statement that returns rows. */
-    public QueryResults Query(String q, boolean tx, ReadConsistencyLevel lvl);
+    /** Query executes a single statement that returns rows. */
+    public QueryResults Query(String q, ReadConsistencyLevel lvl);
 
-    /** Execute executes a statement that does not return rows. */
+    /** Query executes multiple statement that returns rows. */
+    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl);
+
+    /** Execute executes a single statement that does not return rows. */
     public ExecuteResults Execute(String q);
 
     // Ping checks communication with the rqlite node. */

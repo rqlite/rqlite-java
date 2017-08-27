@@ -8,7 +8,7 @@ import com.rqlite.dto.QueryResults;
 
 public class RqliteClientTest {
     @Test
-    public void testRqliteClient() {
+    public void testRqliteClientSingle() {
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
@@ -21,9 +21,13 @@ public class RqliteClientTest {
         Assert.assertNotNull(results);
         System.out.println(results.toString());
 
-        rows = rqlite.Query("SELECT * FROM foo", false, Rqlite.ReadConsistencyLevel.WEAK);
+        rows = rqlite.Query("SELECT * FROM foo", Rqlite.ReadConsistencyLevel.WEAK);
         Assert.assertNotNull(rows);
         System.out.println(rows.toString());
+    }
+
+    @Test
+    public void testRqliteClientMulti() {
     }
 
     @Test
@@ -36,7 +40,7 @@ public class RqliteClientTest {
         Assert.assertNotNull(results);
         System.out.println(results.toString());
 
-        rows = rqlite.Query("more nonsense", false, Rqlite.ReadConsistencyLevel.WEAK);
+        rows = rqlite.Query("more nonsense", Rqlite.ReadConsistencyLevel.WEAK);
         Assert.assertNotNull(rows);
         System.out.println(rows.toString());
     }
