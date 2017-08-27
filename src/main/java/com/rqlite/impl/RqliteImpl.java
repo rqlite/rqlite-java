@@ -38,28 +38,28 @@ public class RqliteImpl implements Rqlite {
         });
     }
 
-    public QueryResults Query(String q, ReadConsistencyLevel lvl) {
-        GenericUrl url = this.urlBuilder.Query(q).setReadConsistencyLevel(lvl);
+    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl) {
+        GenericUrl url = this.urlBuilder.Query().setReadConsistencyLevel(lvl).enableTransaction(tx);
         HttpRequest request = null;
         HttpResponse response = null;
         QueryResults results = null;
 
         try {
-            request = this.requestFactory.buildGetRequest(url);
+            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, q));
+            request.setParser(new JsonObjectParser(JSON_FACTORY));
             response = request.execute();
             results = response.parseAs(QueryResults.class);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return null;
         }
 
         return results;
     }
 
-    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl) {
-        // TODO Auto-generated method stub
-        return null;
+    public QueryResults Query(String s, ReadConsistencyLevel lvl) {
+        String[] sa = { s };
+        return this.Query(sa, false, lvl);
     }
 
     public ExecuteResults Execute(String s) {
