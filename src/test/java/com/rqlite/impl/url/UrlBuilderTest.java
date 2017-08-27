@@ -4,13 +4,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.rqlite.Rqlite;
-import com.rqlite.impl.url.ExecuteUrl;
-import com.rqlite.impl.url.QueryUrl;
-import com.rqlite.impl.url.UrlBuilder;
 
 public class UrlBuilderTest {
     @Test
     public void testUrlBuilderQuery() {
+        UrlBuilder builder = new UrlBuilder("http", "localhost", 4001);
+        QueryUrl url = builder.Query();
+        Assert.assertEquals("http://localhost:4001/db/query", url.toString());
+
+        url.enableTransaction(true);
+        Assert.assertEquals("http://localhost:4001/db/query?transaction=true", url.toString());
+
+        url.enableTransaction(false);
+        Assert.assertEquals("http://localhost:4001/db/query", url.toString());
+    }
+
+    @Test
+    public void testUrlBuilderQueryStatement() {
         UrlBuilder builder = new UrlBuilder("http", "localhost", 4001);
         QueryUrl url = builder.Query("SELECT * FROM foo");
         Assert.assertEquals("http://localhost:4001/db/query?q=SELECT%20*%20FROM%20foo", url.toString());
@@ -41,7 +51,7 @@ public class UrlBuilderTest {
     @Test
     public void testUrlBuilderExecute() {
         UrlBuilder builder = new UrlBuilder("http", "localhost", 4001);
-        ExecuteUrl url = builder.Execute("INSERT INTO foo(name) VALUES(1)");
+        ExecuteUrl url = builder.Execute();
         Assert.assertEquals("http://localhost:4001/db/execute", url.toString());
 
         url.enableTransaction(true);

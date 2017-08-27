@@ -58,7 +58,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public ExecuteResults Execute(String s) {
-        GenericUrl url = this.urlBuilder.Execute(s);
+        GenericUrl url = this.urlBuilder.Execute();
         HttpRequest request = null;
         HttpResponse response = null;
         ExecuteResults results = null;
