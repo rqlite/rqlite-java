@@ -63,14 +63,18 @@ public class RqliteImpl implements Rqlite {
     }
 
     public ExecuteResults Execute(String s) {
-        GenericUrl url = this.urlBuilder.Execute();
+        String[] sa = { s };
+        return this.Execute(sa, false);
+    }
+
+    public ExecuteResults Execute(String[] s, boolean tx) {
+        GenericUrl url = this.urlBuilder.Execute().enableTransaction(tx);
         HttpRequest request = null;
         HttpResponse response = null;
         ExecuteResults results = null;
 
-        String[] stmts = { s };
         try {
-            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
+            request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, s));
             request.setParser(new JsonObjectParser(JSON_FACTORY));
             response = request.execute();
             results = response.parseAs(ExecuteResults.class);
