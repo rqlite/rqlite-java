@@ -1,4 +1,4 @@
-package com.rqlite.url;
+package com.rqlite.impl.url;
 
 import org.junit.Assert;
 import org.junit.Test;
