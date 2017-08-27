@@ -15,4 +15,13 @@ public class Url extends GenericUrl {
         }
         return this;
     }
+
+    public Url enableTimings(Boolean tm) {
+        if (tm) {
+            this.put("timings", tm.toString());
+        } else {
+            this.remove("timings");
+        }
+        return this;
+    }
 }
