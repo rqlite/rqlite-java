@@ -17,7 +17,7 @@ public class QueryResults extends GenericJson {
         public List<String> types;
 
         @Key
-        public List<Object> values;
+        public List<List<Object>> values;
 
         @Key
         public float time;
