@@ -62,11 +62,6 @@ public class RqliteImpl implements Rqlite {
         return this.Query(sa, false, lvl);
     }
 
-    public ExecuteResults Execute(String s) {
-        String[] sa = { s };
-        return this.Execute(sa, false);
-    }
-
     public ExecuteResults Execute(String[] s, boolean tx) {
         GenericUrl url = this.urlBuilder.Execute().enableTransaction(tx);
         HttpRequest request = null;
@@ -84,6 +79,11 @@ public class RqliteImpl implements Rqlite {
         }
 
         return results;
+    }
+
+    public ExecuteResults Execute(String s) {
+        String[] sa = { s };
+        return this.Execute(sa, false);
     }
 
     public Pong Ping() {
