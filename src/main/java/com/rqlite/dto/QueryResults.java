@@ -8,6 +8,9 @@ import com.google.api.client.util.Key;
 public class QueryResults extends GenericJson {
     public static class Result extends GenericJson {
         @Key
+        public String error;
+
+        @Key
         public List<String> columns;
 
         @Key

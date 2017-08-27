@@ -25,4 +25,19 @@ public class RqliteClientTest {
         Assert.assertNotNull(rows);
         System.out.println(rows.toString());
     }
+
+    @Test
+    public void testRqliteClientSyntax() {
+        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
+        ExecuteResults results = null;
+        QueryResults rows = null;
+
+        results = rqlite.Execute("nonsense");
+        Assert.assertNotNull(results);
+        System.out.println(results.toString());
+
+        rows = rqlite.Query("more nonsense", false, Rqlite.ReadConsistencyLevel.WEAK);
+        Assert.assertNotNull(rows);
+        System.out.println(rows.toString());
+    }
 }
