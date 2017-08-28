@@ -42,6 +42,15 @@ public class RequestFactoryTest {
     }
 
     @Test
+    public void testRequestFactorQueryStatementMulti() throws IOException {
+        RequestFactory factory = new RequestFactory("http", "localhost", 4001);
+        QueryRequest request = factory.buildQueryRequest(new String[] { "SELECT * FROM foo", "SELECT * FROM bar" });
+        Assert.assertEquals("http://localhost:4001/db/query", request.getUrl());
+        Assert.assertEquals("POST", request.getMethod());
+        Assert.assertEquals("[\"SELECT * FROM foo\",\"SELECT * FROM bar\"]", request.getBody());
+    }
+
+    @Test
     public void testRequestFactorExecute() throws IOException {
         RequestFactory factory = new RequestFactory("http", "localhost", 4001);
         ExecuteRequest request = factory.buildExecuteRequest(new String[] {});
@@ -55,4 +64,16 @@ public class RequestFactoryTest {
         request.enableTransaction(false);
         Assert.assertEquals("http://localhost:4001/db/execute", request.getUrl());
     }
+
+    @Test
+    public void testRequestFactorExecuteStatementMulti() throws IOException {
+        RequestFactory factory = new RequestFactory("http", "localhost", 4001);
+        ExecuteRequest request = factory.buildExecuteRequest(
+                new String[] { "INSERT INTO foo(name) VALUES(1)", "INSERT INTO foo(name) VALUES(2)" });
+        Assert.assertEquals("http://localhost:4001/db/execute", request.getUrl());
+        Assert.assertEquals("POST", request.getMethod());
+        Assert.assertEquals("[\"INSERT INTO foo(name) VALUES(1)\",\"INSERT INTO foo(name) VALUES(2)\"]",
+                request.getBody());
+    }
+
 }
