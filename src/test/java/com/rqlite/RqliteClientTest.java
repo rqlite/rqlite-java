@@ -15,15 +15,24 @@ public class RqliteClientTest {
 
         results = rqlite.Execute("CREATE TABLE foo (id integer not null primary key, name text)");
         Assert.assertNotNull(results);
-        System.out.println(results.toString());
+        Assert.assertEquals(1, results.results.length);
+        Assert.assertEquals(0, results.results[0].lastInsertId);
 
         results = rqlite.Execute("INSERT INTO foo(name) VALUES(\"fiona\")");
         Assert.assertNotNull(results);
-        System.out.println(results.toString());
+        Assert.assertEquals(1, results.results.length);
+        Assert.assertEquals(1, results.results[0].lastInsertId);
 
         rows = rqlite.Query("SELECT * FROM foo", Rqlite.ReadConsistencyLevel.WEAK);
-        Assert.assertNotNull(rows);
         System.out.println(rows.toString());
+
+        Assert.assertNotNull(rows);
+        Assert.assertEquals(1, rows.results.length);
+        Assert.assertArrayEquals(new String[] { "id", "name" }, rows.results[0].columns);
+        Assert.assertArrayEquals(new String[] { "integer", "text" }, rows.results[0].types);
+        Assert.assertEquals(1, rows.results[0].values.length);
+        // Assert.assertArrayEquals(new Object[] { 1, "fiona" },
+        // rows.results[0].values[0]);
     }
 
     @Test
