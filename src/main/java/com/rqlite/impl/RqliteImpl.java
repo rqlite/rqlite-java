@@ -45,8 +45,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public QueryResults Query(String s, ReadConsistencyLevel lvl) {
-        String[] sa = { s };
-        return this.Query(sa, false, lvl);
+        return this.Query(new String[] { s }, false, lvl);
     }
 
     public ExecuteResults Execute(String[] stmts, boolean tx) {
@@ -71,8 +70,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     public ExecuteResults Execute(String s) {
-        String[] sa = { s };
-        return this.Execute(sa, false);
+        return this.Execute(new String[] { s }, false);
     }
 
     public Pong Ping() {

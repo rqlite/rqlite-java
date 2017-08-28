@@ -59,8 +59,7 @@ public class RequestFactory {
     }
 
     private HttpRequest buildPostRequest(GenericUrl url, String[] stmts) throws IOException {
-        HttpRequest request = this.requestFactory.buildPostRequest(this.executeUrl,
-                new JsonHttpContent(JSON_FACTORY, stmts));
+        HttpRequest request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }
 }

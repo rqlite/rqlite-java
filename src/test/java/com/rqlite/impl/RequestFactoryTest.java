@@ -9,26 +9,17 @@ import com.rqlite.Rqlite;
 
 public class RequestFactoryTest {
     @Test
-    public void testUrlBuilderQuery() throws IOException {
+    public void testRequestFactoryQuery() throws IOException {
         RequestFactory factory = new RequestFactory("http", "localhost", 4001);
-        QueryRequest request = factory.buildQueryRequest(null);
+        QueryRequest request = factory.buildQueryRequest(new String[] {});
         Assert.assertEquals("http://localhost:4001/db/query", request.getUrl());
+        Assert.assertEquals("POST", request.getMethod());
+        Assert.assertEquals("[]", request.getBody());
 
         request.enableTransaction(true);
         Assert.assertEquals("http://localhost:4001/db/query?transaction=true", request.getUrl());
 
         request.enableTransaction(false);
-        Assert.assertEquals("http://localhost:4001/db/query", request.getUrl());
-    }
-
-    @Test
-    public void testUrlBuilderQueryStatement() {
-    }
-
-    @Test
-    public void testUrlBuilderQueryReadConsistency() throws IOException {
-        RequestFactory factory = new RequestFactory("http", "localhost", 4001);
-        QueryRequest request = factory.buildQueryRequest(null);
         Assert.assertEquals("http://localhost:4001/db/query", request.getUrl());
 
         request.setReadConsistencyLevel(Rqlite.ReadConsistencyLevel.STRONG);
@@ -42,10 +33,21 @@ public class RequestFactoryTest {
     }
 
     @Test
-    public void testUrlBuilderExecute() throws IOException {
+    public void testRequestFactorQueryStatement() throws IOException {
         RequestFactory factory = new RequestFactory("http", "localhost", 4001);
-        ExecuteRequest request = factory.buildExecuteRequest(null);
+        QueryRequest request = factory.buildQueryRequest(new String[] { "SELECT * FROM foo" });
+        Assert.assertEquals("http://localhost:4001/db/query", request.getUrl());
+        Assert.assertEquals("POST", request.getMethod());
+        Assert.assertEquals("[\"SELECT * FROM foo\"]", request.getBody());
+    }
+
+    @Test
+    public void testRequestFactorExecute() throws IOException {
+        RequestFactory factory = new RequestFactory("http", "localhost", 4001);
+        ExecuteRequest request = factory.buildExecuteRequest(new String[] {});
         Assert.assertEquals("http://localhost:4001/db/execute", request.getUrl());
+        Assert.assertEquals("POST", request.getMethod());
+        Assert.assertEquals("[]", request.getBody());
 
         request.enableTransaction(true);
         Assert.assertEquals("http://localhost:4001/db/execute?transaction=true", request.getUrl());
