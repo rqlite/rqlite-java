@@ -3,7 +3,7 @@ package com.rqlite;
 import com.rqlite.impl.RqliteImpl;
 
 public enum RqliteFactory {
-    INSTANCE; // XXX read about this! Enum-based factories.
+    INSTANCE;
 
     /**
      * Create a connection to a rqlite node.
