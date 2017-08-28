@@ -5,16 +5,20 @@ _Java client for rqlite, currently in development._
 
 ## Quick start
 ```java
+// Declare variables.
+ExecuteResults results = null;
+QueryResults rows = null;
+
 // Get a connection to a rqlite node.
 Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
 
 // Create a table.
-rqlite.Execute("CREATE TABLE foo (id integer not null primary key, name text)");
-System.out.println(rows.toString());
+results = rqlite.Execute("CREATE TABLE foo (id integer not null primary key, name text)");
+System.out.println(results.toString());
 
 // Insert a record.
-rqlite.Execute("INSERT INTO foo(name) VALUES(\"fiona\")");
-System.out.println(rows.toString());
+results = rqlite.Execute("INSERT INTO foo(name) VALUES(\"fiona\")");
+System.out.println(results.toString());
 
 // Query all records in the table.
 rows = rqlite.Query("SELECT * FROM foo", Rqlite.ReadConsistencyLevel.WEAK);
