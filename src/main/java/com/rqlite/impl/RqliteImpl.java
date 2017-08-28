@@ -32,8 +32,7 @@ public class RqliteImpl implements Rqlite {
             e1.printStackTrace();
             return null;
         }
-        request.enableTransaction(tx);
-        request.setReadConsistencyLevel(lvl);
+        request.enableTransaction(tx).setReadConsistencyLevel(lvl);
 
         try {
             return request.execute();
