@@ -18,6 +18,7 @@ public class ExecuteResults extends GenericJson {
         public float time;
     }
 
+    @Key("results")
     public Result[] results;
 
     @Key
