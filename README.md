@@ -1,7 +1,7 @@
 # rqlite-java
-[![Circle CI](https://circleci.com/gh/rqlite/rqlite-java/tree/master.svg?style=svg)](https://circleci.com/gh/rqlite/rqlite-java/tree/master) [![Google Group](https://img.shields.io/badge/Google%20Group--blue.svg)](https://groups.google.com/group/rqlite)
+[![Google Group](https://img.shields.io/badge/Google%20Group--blue.svg)](https://groups.google.com/group/rqlite)
 
-This is the Java client library for [rqlite](https://github.com/rqlite/rqlite). rqlite is a lightweight, distributed relational database, which uses SQLite as its storage engine. The library is currently in active development. Significant development and testing remains, and pull requests are welcome.
+This is a basic Java client library for [rqlite](https://github.com/rqlite/rqlite). rqlite is a lightweight, distributed relational database, which uses SQLite as its storage engine. Significant development and testing remains, and pull requests are welcome.
 
 ## Quick start
 ```java
