@@ -73,7 +73,6 @@ public class RqliteClientTest {
         Assert.assertEquals(2, rows.results[1].values.length);
         Assert.assertArrayEquals(new Object[] { "fiona" }, rows.results[1].values[0]);
         Assert.assertArrayEquals(new Object[] { "declan" }, rows.results[1].values[1]);
-	rqlite.Execute("DROP TABLE bar");
     }
 
     @Test
