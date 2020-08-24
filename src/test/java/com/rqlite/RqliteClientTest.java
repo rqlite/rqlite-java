@@ -4,13 +4,16 @@ import java.math.BigDecimal;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.QueryResults;
 
 public class RqliteClientTest {
+
     @Test
     public void testRqliteClientSingle() {
+
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
@@ -31,12 +34,11 @@ public class RqliteClientTest {
         Assert.assertArrayEquals(new String[] { "integer", "text" }, rows.results[0].types);
         Assert.assertEquals(1, rows.results[0].values.length);
         Assert.assertArrayEquals(new Object[] { new BigDecimal(1), "fiona" }, rows.results[0].values[0]);
-        
-        rqlite.Execute("DROP TABLE foo");
     }
 
     @Test
     public void testRqliteClientMulti() {
+
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
@@ -71,12 +73,12 @@ public class RqliteClientTest {
         Assert.assertEquals(2, rows.results[1].values.length);
         Assert.assertArrayEquals(new Object[] { "fiona" }, rows.results[1].values[0]);
         Assert.assertArrayEquals(new Object[] { "declan" }, rows.results[1].values[1]);
-        
-        rqlite.Execute("DROP TABLE bar");
+	rqlite.Execute("DROP TABLE bar");
     }
 
     @Test
     public void testRqliteClientSyntax() {
+
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
@@ -91,5 +93,14 @@ public class RqliteClientTest {
         Assert.assertNotNull(rows);
         Assert.assertEquals(1, rows.results.length);
         Assert.assertEquals("near \"more\": syntax error", rows.results[0].error);
+    }
+
+    @After
+    public void after() throws Exception {
+        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
+        rqlite.Execute("DROP TABLE foo");
+        rqlite.Execute("DROP TABLE bar");
+
+
     }
 }
