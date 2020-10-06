@@ -1,20 +1,26 @@
 package com.rqlite;
 
-import java.math.BigDecimal;
-
+import com.rqlite.dto.ExecuteResults;
+import com.rqlite.dto.QueryResults;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
-import com.rqlite.dto.ExecuteResults;
-import com.rqlite.dto.QueryResults;
+import java.math.BigDecimal;
 
 public class RqliteClientTest {
 
+    public Rqlite rqlite;
+
+    @Before
+    public void setup(){
+        rqlite = RqliteFactory.connect("http", "localhost", 4001);
+    }
+
     @Test
     public void testRqliteClientSingle() {
-
-        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
 
@@ -39,7 +45,6 @@ public class RqliteClientTest {
     @Test
     public void testRqliteClientMulti() {
 
-        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
 
@@ -78,7 +83,6 @@ public class RqliteClientTest {
     @Test
     public void testRqliteClientSyntax() {
 
-        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         ExecuteResults results = null;
         QueryResults rows = null;
 
@@ -99,7 +103,5 @@ public class RqliteClientTest {
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         rqlite.Execute("DROP TABLE foo");
         rqlite.Execute("DROP TABLE bar");
-
-
     }
 }

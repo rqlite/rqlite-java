@@ -4,12 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.rqlite.Rqlite.ReadConsistencyLevel;
 import com.rqlite.dto.QueryResults;
 
-public class QueryRequest {
+public class QueryRequest extends GenericRequest {
 
     private HttpRequest httpRequest;
 
@@ -24,6 +25,10 @@ public class QueryRequest {
 
     public String getUrl() {
         return this.httpRequest.getUrl().toString();
+    }
+
+    public void setUrl(GenericUrl url){
+        this.httpRequest.setUrl(url);
     }
 
     public String getMethod() {

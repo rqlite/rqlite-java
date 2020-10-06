@@ -15,19 +15,18 @@ public class RqliteFactoryTest {
         Assert.assertNotNull(rqlite);
     }
 
-    @Test
-    public void testCreateRqliteInstancePing() {
-        Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
-        Pong pong = rqlite.Ping();
-        Assert.assertEquals(getRqliteVersion(), pong.version);
-    }
+   @Test
+   public void testCreateRqliteInstancePing() {
+       Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
+      Pong pong = rqlite.Ping();
+      Assert.assertEquals(getRqliteVersion(), pong.version);
+   }
 
-    private String getRqliteVersion() {
-        Map<String, String> getenv = System.getenv();
-        if (getenv.containsKey("RQLITE_VERSION")) {
-            return getenv.get("RQLITE_VERSION");
-        }
-        return "unknown";
-    }
-
+   private String getRqliteVersion() {
+       Map<String, String> getenv = System.getenv();
+       if (getenv.containsKey("RQLITE_VERSION")) {
+           return getenv.get("RQLITE_VERSION");
+       }
+       return "unknown";
+   }
 }

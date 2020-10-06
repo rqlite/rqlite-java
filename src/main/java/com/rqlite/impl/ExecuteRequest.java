@@ -3,11 +3,12 @@ package com.rqlite.impl;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.rqlite.dto.ExecuteResults;
 
-public class ExecuteRequest {
+public class ExecuteRequest extends GenericRequest{
 
     private HttpRequest httpRequest;
 
@@ -22,6 +23,10 @@ public class ExecuteRequest {
 
     public String getUrl() {
         return this.httpRequest.getUrl().toString();
+    }
+
+    public void setUrl(GenericUrl url){
+        this.httpRequest.setUrl(url);
     }
 
     public String getMethod() {

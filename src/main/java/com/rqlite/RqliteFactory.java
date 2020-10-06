@@ -19,4 +19,8 @@ public enum RqliteFactory {
     public static Rqlite connect(final String proto, final String host, final Integer port) {
         return new RqliteImpl(proto, host, port);
     }
+
+    public static Rqlite connect(final String config) {
+        return new RqliteImpl(config);
+    }
 }

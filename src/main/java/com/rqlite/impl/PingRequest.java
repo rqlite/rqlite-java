@@ -2,12 +2,13 @@ package com.rqlite.impl;
 
 import java.io.IOException;
 
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.rqlite.dto.Pong;
 
-public class PingRequest {
+public class PingRequest extends GenericRequest{
     private HttpRequest httpRequest;
 
     public PingRequest(HttpRequest request) {
@@ -23,7 +24,6 @@ public class PingRequest {
         return new Pong(version);
     }
     
-    public String getUrl() {
-        return this.httpRequest.getUrl().toString();
-    }
+
 }
+
