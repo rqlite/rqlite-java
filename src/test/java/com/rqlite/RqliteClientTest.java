@@ -44,7 +44,6 @@ public class RqliteClientTest {
 
     @Test
     public void testRqliteClientMulti() {
-
         ExecuteResults results = null;
         QueryResults rows = null;
 
@@ -82,7 +81,6 @@ public class RqliteClientTest {
 
     @Test
     public void testRqliteClientSyntax() {
-
         ExecuteResults results = null;
         QueryResults rows = null;
 
