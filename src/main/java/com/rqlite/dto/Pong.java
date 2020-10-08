@@ -1,6 +1,6 @@
 package com.rqlite.dto;
 
-public class Pong {
+public class Pong implements GenericResults {
     public String version;
 
     public Pong() {

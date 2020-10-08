@@ -62,4 +62,24 @@ public class RequestFactory {
         HttpRequest request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }
+
+    GenericRequest AdoptRequest(GenericRequest request){
+        if (request instanceof ExecuteRequest) {request.setUrl(this.executeUrl);}
+        else if (request instanceof QueryRequest) {request.setUrl(this.queryUrl);}
+        else {request.setUrl(this.statusUrl);}
+        return request;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestFactory{" +
+                "requestFactory=" + requestFactory +
+                ", proto='" + proto + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", executeUrl=" + executeUrl +
+                ", queryUrl=" + queryUrl +
+                ", statusUrl=" + statusUrl +
+                '}';
+    }
 }

@@ -3,7 +3,19 @@
   <groupId>com.rqlite</groupId>
   <artifactId>rqlite-java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>rqlite Java client</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <name>rqlite Java client</name>
   <description>A Java client for rqlite, the lightweight, distributed relational database built on SQLite</description>
   <dependencies>
   	<dependency>
@@ -14,13 +26,13 @@
   	<dependency>
   		<groupId>com.google.http-client</groupId>
   		<artifactId>google-http-client-jackson2</artifactId>
-  		<version>1.22.0</version>
+  		<version>1.36.0</version>
   	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
-</dependency>
+    </dependency>
   </dependencies>
 </project>
