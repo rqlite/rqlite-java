@@ -5,6 +5,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.rqlite.NodeUnavailableException;
 import com.rqlite.Rqlite;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.GenericResults;
@@ -15,8 +16,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RqliteImpl implements Rqlite {
 
@@ -58,7 +61,7 @@ public class RqliteImpl implements Rqlite {
         }
     }
 
-    private GenericResults tryOtherPeers(GenericRequest request, String[] stmts) {
+    private GenericResults tryOtherPeers(GenericRequest request, String[] stmts) throws NodeUnavailableException {
         // Cycle through the list of nodes in the config file.
         long end = System.currentTimeMillis() + timeoutDelay;
         if (peers != null) {
@@ -84,11 +87,10 @@ public class RqliteImpl implements Rqlite {
                 }
             }
         }
-        System.out.println("Could not connect to a node.");
-        return null;
+        throw new NodeUnavailableException("Could not connect to rqlite node.  Please check that the node is online and that your config files point to the correct address.");
     }
 
-    public QueryResults Query(String[] stmts, boolean tx, ReadConsistencyLevel lvl) {
+    public QueryResults Query(String[] stmts, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException {
         QueryRequest request;
 
         try {
@@ -110,11 +112,11 @@ public class RqliteImpl implements Rqlite {
         }
     }
 
-    public QueryResults Query(String s, ReadConsistencyLevel lvl) {
+    public QueryResults Query(String s, ReadConsistencyLevel lvl) throws NodeUnavailableException {
         return this.Query(new String[] { s }, false, lvl);
     }
 
-    public ExecuteResults Execute(String[] stmts, boolean tx) {
+    public ExecuteResults Execute(String[] stmts, boolean tx) throws NodeUnavailableException {
         ExecuteRequest request;
         try {
             request = this.requestFactory.buildExecuteRequest(stmts);
@@ -135,7 +137,7 @@ public class RqliteImpl implements Rqlite {
         }
     }
 
-    public ExecuteResults Execute(String s) {
+    public ExecuteResults Execute(String s) throws NodeUnavailableException {
         return this.Execute(new String[] { s }, false);
     }
 

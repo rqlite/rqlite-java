@@ -1,14 +1,14 @@
 package com.rqlite.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.rqlite.Rqlite.ReadConsistencyLevel;
 import com.rqlite.dto.QueryResults;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class QueryRequest extends GenericRequest {
 

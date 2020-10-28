@@ -64,33 +64,40 @@ public class RqliteFailoverTest {
         ExecuteResults results = null;
         QueryResults rows = null;
 
-        results = rqlite.Execute("CREATE TABLE baz (id integer not null primary key, name text)");
-        Assert.assertNotNull(results);
-        Assert.assertEquals(1, results.results.length);
+        try {
+            results = rqlite.Execute("CREATE TABLE baz (id integer not null primary key, name text)");
+            Assert.assertNotNull(results);
+            Assert.assertEquals(1, results.results.length);
 
-        //Connect to node.2 without config file
-        Rqlite rqlite2 = RqliteFactory.connect("http", "localhost", 4007);
+            //Connect to node.2 without config file
+            Rqlite rqlite2 = RqliteFactory.connect("http", "localhost", 4007);
 
-        //Kill leader node.2
-        node2.destroy();
+            //Kill leader node.2
+            node2.destroy();
 
-        //see if rqlite with config file has recovered
-        results = rqlite.Execute("INSERT INTO baz(name) VALUES(\"fiona\")");
-        Assert.assertNotNull(results);
-        Assert.assertEquals(1, results.results.length);
-        Assert.assertEquals(1, results.results[0].lastInsertId);
+            //see if rqlite with config file has recovered
+            results = rqlite.Execute("INSERT INTO baz(name) VALUES(\"fiona\")");
+            Assert.assertNotNull(results);
+            Assert.assertEquals(1, results.results.length);
+            Assert.assertEquals(1, results.results[0].lastInsertId);
 
-        rows = rqlite.Query("SELECT * FROM baz", Rqlite.ReadConsistencyLevel.WEAK);
-        Assert.assertNotNull(rows);
-        Assert.assertEquals(1, rows.results.length);
-        Assert.assertArrayEquals(new String[] { "id", "name" }, rows.results[0].columns);
-        Assert.assertArrayEquals(new String[] { "integer", "text" }, rows.results[0].types);
-        Assert.assertEquals(1, rows.results[0].values.length);
-        Assert.assertArrayEquals(new Object[] { new BigDecimal(1), "fiona" }, rows.results[0].values[0]);
+            rows = rqlite.Query("SELECT * FROM baz", Rqlite.ReadConsistencyLevel.WEAK);
+            Assert.assertNotNull(rows);
+            Assert.assertEquals(1, rows.results.length);
+            Assert.assertArrayEquals(new String[]{"id", "name"}, rows.results[0].columns);
+            Assert.assertArrayEquals(new String[]{"integer", "text"}, rows.results[0].types);
+            Assert.assertEquals(1, rows.results[0].values.length);
+            Assert.assertArrayEquals(new Object[]{new BigDecimal(1), "fiona"}, rows.results[0].values[0]);
 
-        //rqlite without config file should fail
-        rows = rqlite2.Query("SELECT * FROM baz", Rqlite.ReadConsistencyLevel.WEAK);
-        Assert.assertNull(rows);
+            //rqlite without config file should fail
+            try {
+                rows = rqlite2.Query("SELECT * FROM baz", Rqlite.ReadConsistencyLevel.WEAK);
+                Assert.fail("Expected NodeUnavailableException was not thrown.");
+            } catch (NodeUnavailableException e) {}
+
+        } catch (Exception e) {
+            Assert.fail("Failed due to an unexpected exception.\n" + e.getMessage());
+        }
     }
 
     @After
