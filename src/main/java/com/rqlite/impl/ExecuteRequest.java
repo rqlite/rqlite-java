@@ -1,12 +1,12 @@
 package com.rqlite.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.rqlite.dto.ExecuteResults;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ExecuteRequest extends GenericRequest{
 

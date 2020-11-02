@@ -31,16 +31,16 @@ public interface Rqlite {
     }
 
     /** Query executes a single statement that returns rows. */
-    public QueryResults Query(String q, ReadConsistencyLevel lvl);
+    public QueryResults Query(String q, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Query executes multiple statement that returns rows. */
-    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl);
+    public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Execute executes a single statement that does not return rows. */
-    public ExecuteResults Execute(String q);
+    public ExecuteResults Execute(String q) throws NodeUnavailableException;
 
     /** Execute executes multiple statement that do not return rows. */
-    public ExecuteResults Execute(String[] q, boolean tx);
+    public ExecuteResults Execute(String[] q, boolean tx) throws NodeUnavailableException;
 
     // Ping checks communication with the rqlite node. */
     public Pong Ping();
