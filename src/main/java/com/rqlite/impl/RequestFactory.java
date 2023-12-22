@@ -1,13 +1,18 @@
 package com.rqlite.impl;
 
-import com.google.api.client.http.*;
+import java.io.IOException;
+
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-
-import java.io.IOException;
+import com.rqlite.dto.ParamaterizedStatement;
 
 public class RequestFactory {
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -44,7 +49,17 @@ public class RequestFactory {
         return new ExecuteRequest(request);
     }
 
+    public ExecuteRequest buildExecuteRequest(ParamaterizedStatement[] stmts) throws IOException {
+        HttpRequest request = this.buildPostRequest(this.executeUrl, stmts);
+        return new ExecuteRequest(request);
+    }
+
     public QueryRequest buildQueryRequest(String[] stmts) throws IOException {
+        HttpRequest request = this.buildPostRequest(this.queryUrl, stmts);
+        return new QueryRequest(request);
+    }
+
+    public QueryRequest buildQueryRequest(ParamaterizedStatement[] stmts) throws IOException {
         HttpRequest request = this.buildPostRequest(this.queryUrl, stmts);
         return new QueryRequest(request);
     }
@@ -56,6 +71,10 @@ public class RequestFactory {
 
     private HttpRequest buildPostRequest(GenericUrl url, String[] stmts) throws IOException {
         HttpRequest request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
+        return request.setParser(new JsonObjectParser(JSON_FACTORY));
+    }
+    private HttpRequest buildPostRequest(GenericUrl url, ParamaterizedStatement[] stmts) throws IOException {
+        HttpRequest request = this.requestFactory.buildPostRequest(url, new ParameterizedStatementContent(stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }
 

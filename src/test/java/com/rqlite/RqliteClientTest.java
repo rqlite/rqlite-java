@@ -1,13 +1,15 @@
 package com.rqlite;
 
-import com.rqlite.dto.ExecuteResults;
-import com.rqlite.dto.QueryResults;
+import java.math.BigDecimal;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
+import com.rqlite.dto.ExecuteResults;
+import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.QueryResults;
 
 public class RqliteClientTest {
 
@@ -19,7 +21,7 @@ public class RqliteClientTest {
     }
 
     @Test
-    public void testRqliteClientSingle() {
+    public void testRqliteClientSingle() throws NodeUnavailableException {
         ExecuteResults results = null;
         QueryResults rows = null;
 
@@ -41,6 +43,16 @@ public class RqliteClientTest {
             Assert.assertArrayEquals(new String[]{"integer", "text"}, rows.results[0].types);
             Assert.assertEquals(1, rows.results[0].values.length);
             Assert.assertArrayEquals(new Object[]{new BigDecimal(1), "fiona"}, rows.results[0].values[0]);
+
+            results = rqlite.Execute("CREATE TABLE secret_agents (id integer not null primary key, name text, secret text)");
+            Assert.assertNotNull(results);
+            Assert.assertEquals(1, results.results.length);
+
+            results = rqlite.Execute(new ParamaterizedStatement("INSERT INTO secret_agents(id, name, secret) VALUES(?, ?, ?)", new Object[]{7, "James Bond", "not-a-secret"}));
+            Assert.assertNotNull(results);
+            Assert.assertEquals(1, results.results.length);
+            Assert.assertNull(results.results[0].error);
+            Assert.assertEquals(7, results.results[0].lastInsertId);
         } catch (NodeUnavailableException e) {
             Assert.fail("Failed because rqlite-java could not connect to the node.");
         }
@@ -112,5 +124,6 @@ public class RqliteClientTest {
         Rqlite rqlite = RqliteFactory.connect("http", "localhost", 4001);
         rqlite.Execute("DROP TABLE foo");
         rqlite.Execute("DROP TABLE bar");
+        rqlite.Execute("DROP TABLE secret_agents");
     }
 }
