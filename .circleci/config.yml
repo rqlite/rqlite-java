@@ -11,6 +11,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
+      - image: rqlite/rqlite:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
