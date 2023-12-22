@@ -12,7 +12,7 @@ import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.ParameterizedStatement;
 
 public class RequestFactory {
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -49,7 +49,7 @@ public class RequestFactory {
         return new ExecuteRequest(request);
     }
 
-    public ExecuteRequest buildExecuteRequest(ParamaterizedStatement[] stmts) throws IOException {
+    public ExecuteRequest buildExecuteRequest(ParameterizedStatement[] stmts) throws IOException {
         HttpRequest request = this.buildPostRequest(this.executeUrl, stmts);
         return new ExecuteRequest(request);
     }
@@ -59,7 +59,7 @@ public class RequestFactory {
         return new QueryRequest(request);
     }
 
-    public QueryRequest buildQueryRequest(ParamaterizedStatement[] stmts) throws IOException {
+    public QueryRequest buildQueryRequest(ParameterizedStatement[] stmts) throws IOException {
         HttpRequest request = this.buildPostRequest(this.queryUrl, stmts);
         return new QueryRequest(request);
     }
@@ -73,7 +73,7 @@ public class RequestFactory {
         HttpRequest request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }
-    private HttpRequest buildPostRequest(GenericUrl url, ParamaterizedStatement[] stmts) throws IOException {
+    private HttpRequest buildPostRequest(GenericUrl url, ParameterizedStatement[] stmts) throws IOException {
         HttpRequest request = this.requestFactory.buildPostRequest(url, new ParameterizedStatementContent(stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }

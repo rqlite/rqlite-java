@@ -18,7 +18,7 @@ import com.rqlite.NodeUnavailableException;
 import com.rqlite.Rqlite;
 import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.GenericResults;
-import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.ParameterizedStatement;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
 
@@ -91,7 +91,7 @@ public class RqliteImpl implements Rqlite {
         throw new NodeUnavailableException("Could not connect to rqlite node.  Please check that the node is online and that your config files point to the correct address.");
     }
 
-    private GenericResults tryOtherPeers(GenericRequest request, ParamaterizedStatement[] stmts) throws NodeUnavailableException {
+    private GenericResults tryOtherPeers(GenericRequest request, ParameterizedStatement[] stmts) throws NodeUnavailableException {
         // Cycle through the list of nodes in the config file.
         long end = System.currentTimeMillis() + timeoutDelay;
         if (peers != null) {
@@ -142,7 +142,7 @@ public class RqliteImpl implements Rqlite {
         }
     }
     @Override
-    public QueryResults Query(ParamaterizedStatement[] stmts, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException {
+    public QueryResults Query(ParameterizedStatement[] stmts, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException {
         QueryRequest request;
 
         try {
@@ -169,8 +169,8 @@ public class RqliteImpl implements Rqlite {
     }
 
     @Override
-    public QueryResults Query(ParamaterizedStatement q, ReadConsistencyLevel lvl) throws NodeUnavailableException {
-        return this.Query(new ParamaterizedStatement[] { q }, false, lvl);
+    public QueryResults Query(ParameterizedStatement q, ReadConsistencyLevel lvl) throws NodeUnavailableException {
+        return this.Query(new ParameterizedStatement[] { q }, false, lvl);
     }
 
     public ExecuteResults Execute(String[] stmts, boolean tx) throws NodeUnavailableException {
@@ -195,7 +195,7 @@ public class RqliteImpl implements Rqlite {
     }
 
     @Override
-    public ExecuteResults Execute(ParamaterizedStatement[] stmts, boolean tx) throws NodeUnavailableException {
+    public ExecuteResults Execute(ParameterizedStatement[] stmts, boolean tx) throws NodeUnavailableException {
         ExecuteRequest request;
         try {
             request = this.requestFactory.buildExecuteRequest(stmts);
@@ -221,8 +221,8 @@ public class RqliteImpl implements Rqlite {
     }
 
     @Override
-    public ExecuteResults Execute(ParamaterizedStatement q) throws NodeUnavailableException {
-        return this.Execute(new ParamaterizedStatement[]{ q }, false);
+    public ExecuteResults Execute(ParameterizedStatement q) throws NodeUnavailableException {
+        return this.Execute(new ParameterizedStatement[]{ q }, false);
     }
 
     public Pong Ping() {

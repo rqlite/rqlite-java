@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.rqlite.dto.ExecuteResults;
-import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.ParameterizedStatement;
 import com.rqlite.dto.QueryResults;
 
 public class RqliteClientTest {
@@ -48,7 +48,7 @@ public class RqliteClientTest {
             Assert.assertNotNull(results);
             Assert.assertEquals(1, results.results.length);
 
-            results = rqlite.Execute(new ParamaterizedStatement("INSERT INTO secret_agents(id, name, secret) VALUES(?, ?, ?)", new Object[]{7, "James Bond", "not-a-secret"}));
+            results = rqlite.Execute(new ParameterizedStatement("INSERT INTO secret_agents(id, name, secret) VALUES(?, ?, ?)", new Object[]{7, "James Bond", "not-a-secret"}));
             Assert.assertNotNull(results);
             Assert.assertEquals(1, results.results.length);
             Assert.assertNull(results.results[0].error);

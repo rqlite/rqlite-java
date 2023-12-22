@@ -6,17 +6,17 @@ import java.io.OutputStream;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.api.client.http.AbstractHttpContent;
-import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.ParameterizedStatement;
 
 public class ParameterizedStatementContent extends AbstractHttpContent {
 
-  private final ParamaterizedStatement[] stmts;
+  private final ParameterizedStatement[] stmts;
   private static final JsonFactory JSON_FACTORY = new JsonFactory();
 
-  protected ParameterizedStatementContent(ParamaterizedStatement[] stmts) {
+  protected ParameterizedStatementContent(ParameterizedStatement[] stmts) {
     super("application/json");
     if (stmts == null) {
-      stmts = new ParamaterizedStatement[]{};
+      stmts = new ParameterizedStatement[]{};
     }
     this.stmts = stmts;
   }
@@ -26,7 +26,7 @@ public class ParameterizedStatementContent extends AbstractHttpContent {
 
     JsonGenerator json = JSON_FACTORY.createGenerator(out);
     json.writeStartArray();
-    for (ParamaterizedStatement s : stmts) {
+    for (ParameterizedStatement s : stmts) {
       json.writeStartArray();
       json.writeString(s.query);
       if (s.arguments != null) {

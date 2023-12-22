@@ -1,7 +1,7 @@
 package com.rqlite;
 
 import com.rqlite.dto.ExecuteResults;
-import com.rqlite.dto.ParamaterizedStatement;
+import com.rqlite.dto.ParameterizedStatement;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
 
@@ -35,25 +35,25 @@ public interface Rqlite {
     public QueryResults Query(String q, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Query executes a single paramaterized statement that returns rows. */
-    public QueryResults Query(ParamaterizedStatement q, ReadConsistencyLevel lvl) throws NodeUnavailableException;
+    public QueryResults Query(ParameterizedStatement q, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Query executes multiple statement that returns rows. */
     public QueryResults Query(String[] q, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Query executes multiple paramaterized statement that returns rows. */
-    public QueryResults Query(ParamaterizedStatement[] q, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException;
+    public QueryResults Query(ParameterizedStatement[] q, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException;
 
     /** Execute executes a single statement that does not return rows. */
     public ExecuteResults Execute(String q) throws NodeUnavailableException;
 
     /** Execute executes a single paramaterized statement that does not return rows. */
-    public ExecuteResults Execute(ParamaterizedStatement q) throws NodeUnavailableException;
+    public ExecuteResults Execute(ParameterizedStatement q) throws NodeUnavailableException;
 
     /** Execute executes multiple statement that do not return rows. */
     public ExecuteResults Execute(String[] q, boolean tx) throws NodeUnavailableException;
 
     /** Execute executes multiple paramaterized statement that do not return rows. */
-    public ExecuteResults Execute(ParamaterizedStatement[] q, boolean tx) throws NodeUnavailableException;
+    public ExecuteResults Execute(ParameterizedStatement[] q, boolean tx) throws NodeUnavailableException;
 
     // Ping checks communication with the rqlite node. */
     public Pong Ping();
